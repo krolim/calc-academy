@@ -54,16 +54,4 @@ public class RecursiveCalc {
       throw new Exception("Wrong operation");
     }
   }
-
-  public static void main(String[] args) {
-    RecursiveCalc calc = new RecursiveCalc();
-    try {
-//			System.out.println(calc.calculate("2+3-1*2*3+1+3*2-4"));
-      System.out.println(calc.calculate("2+3*(2+1)-3/(2+1)"));
-    } catch (Exception e) {
-      // TODO Auto-generated catch block
-      e.printStackTrace();
-    }
-  }
-
 }

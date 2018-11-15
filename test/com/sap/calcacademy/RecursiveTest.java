@@ -9,7 +9,8 @@ public class RecursiveTest {
 	@Test
 	public void test() throws Exception {
 		RecursiveCalc calc = new RecursiveCalc();
-		double result = calc.calculate("9/3/3");
+		double result = 0; 
+		result = calc.calculate("9/3/3");
 		assertEquals(1, result, 0);
 		result = calc.calculate("4*(5*(3*(4+1)))");
 		assertEquals(300, result, 0);
@@ -21,6 +22,10 @@ public class RecursiveTest {
 		assertEquals(-14, result, 0);
 		result = calc.calculate("2*(1+2)-4");
 		assertEquals(2, result, 0);
+		result = calc.calculate("((4-1)*2+3*(1-1))");
+        assertEquals(6, result, 0);
+        result = calc.calculate("2+(-2)");
+        assertEquals(0, result, 0);
 	}
 
 }

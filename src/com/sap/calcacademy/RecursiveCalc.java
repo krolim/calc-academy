@@ -1,29 +1,39 @@
 package com.sap.calcacademy;
 
 public class RecursiveCalc {
-
+  
+  
+  private class Result {
+    int idx;
+    double value;
+  }
+ 
+  
   public double calculate(String expression) throws Exception {
-    double result = 0;
+    return calc(expression).value;
+    
+  }
+
+  public Result calc(String expression) throws Exception {
+    Result result = new Result();
     Number oper = null;
     int sign = 1;
     char modOperation = 0;
-
     char[] expr = expression.toCharArray();
-    for (int i = 0; i < expr.length && expr[i] != ')'; ++i) {
+    int i = 0;
+    for (;i < expr.length && expr[i] != ')'; ++i) {
       char c = expr[i];
       if (Character.isDigit(c)) {
         double val = Character.digit(c, 10);
         oper = calculateOperand(oper, modOperation, val);
         modOperation = 0;
       } else if (c == '(') {
-        oper = calculateOperand(oper, modOperation, calculate(expression.substring(i + 1)));
-        int idx = expression.indexOf(')', i);
-        if (idx == -1)
-          throw new Exception("Wrong parentesis count");
-        i = idx;
+        Result midRes = calc(expression.substring(i + 1));
+        oper = calculateOperand(oper, modOperation, midRes.value);
+        i += midRes.idx;
       } else if (isAddOrSubstract(c)) {
         if (oper != null) {
-          result += sign * oper.doubleValue();
+          result.value += sign * oper.doubleValue();
           oper = null;
         }
         sign = (c == '-') ? -1 : 1;
@@ -32,7 +42,8 @@ public class RecursiveCalc {
       }
 
     }
-    result += sign * oper.doubleValue();
+    result.value += sign * oper.doubleValue();
+    result.idx = i + 1;
     return result;
   }
 
